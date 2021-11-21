@@ -18,4 +18,15 @@ describe('Inbox',()=>{
     it('deploys contract',()=>{
         assert.ok(inbox.options.address);
     });
+
+    it('has a initial message',async ()=>{
+        const message=await inbox.methods.message().call();
+        assert.equal(message,'Hi There!');
+    });
+
+    it('can chnage the message',async()=>{
+        await inbox.methods.setMessage("bye").send({from:accounts[0]});
+        const message=await inbox.methods.message().call();
+        assert.equal(message,'bye');
+    })
 });
